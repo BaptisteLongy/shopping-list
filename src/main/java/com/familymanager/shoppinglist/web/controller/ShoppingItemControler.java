@@ -17,11 +17,13 @@ public class ShoppingItemControler {
     @Autowired
     private ShoppingItemDAO aShoppingItemDAO;
 
+    @CrossOrigin
     @GetMapping(value="/ShoppingItems")
     public List<ShoppingItem> listShoppingItems() {
         return aShoppingItemDAO.findAll();
     }
 
+    @CrossOrigin
     @GetMapping(value="/ShoppingItems/{id}")
     public ShoppingItem getShoppingItemByID(@PathVariable int id) {
         ShoppingItem foundShoppingItem = aShoppingItemDAO.findById(id);
@@ -31,6 +33,7 @@ public class ShoppingItemControler {
         return foundShoppingItem;
     }
 
+    @CrossOrigin
     @PostMapping(value="/ShoppingItems")
     public ResponseEntity<Void> addShoppingItem(@RequestBody ShoppingItem newShoppingItem) {
         ShoppingItem shoppingItemAdded = aShoppingItemDAO.save(newShoppingItem);
@@ -43,12 +46,14 @@ public class ShoppingItemControler {
         return ResponseEntity.created(location).build();
     }
 
+    @CrossOrigin
     @DeleteMapping(value="/ShoppingItems/{id}")
     public void deleteShoppingItems(@PathVariable int id) {
         ShoppingItem shoppingItemToDelete = aShoppingItemDAO.findById(id);
         aShoppingItemDAO.delete(shoppingItemToDelete);
     }
 
+    @CrossOrigin
     @PutMapping(value="/ShoppingItems")
     public ShoppingItem updateShoppingItem(@RequestBody ShoppingItem updatedShoppingItem) {
         aShoppingItemDAO.save(updatedShoppingItem);
