@@ -3,6 +3,7 @@ package com.familymanager.shoppinglist.web.controller;
 import com.familymanager.shoppinglist.dao.ShoppingItemDAO;
 import com.familymanager.shoppinglist.model.ShoppingItem;
 import com.familymanager.shoppinglist.web.exceptions.ShoppingItemNotFoundException;
+import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class ShoppingItemControler {
     public ShoppingItem getShoppingItemByID(@PathVariable int id) {
         ShoppingItem foundShoppingItem = aShoppingItemDAO.findById(id);
         if (foundShoppingItem==null) {
-            throw new ShoppingItemNotFoundException("Shopping Item with id " + id + " not found");
+                throw new ShoppingItemNotFoundException("Shopping Item with id " + id + " not found");
         }
         return foundShoppingItem;
     }
@@ -58,5 +59,23 @@ public class ShoppingItemControler {
     public ShoppingItem updateShoppingItem(@RequestBody ShoppingItem updatedShoppingItem) {
         aShoppingItemDAO.save(updatedShoppingItem);
         return updatedShoppingItem;
+    }
+
+    @CrossOrigin
+    @PostMapping(value="/ShoppingList")
+    public ResponseEntity<Void> addShoppingList(@RequestBody String shoppingList) {
+        String[] shoppingListAsList = shoppingList.split("\n");
+        for (String shoppingItemAsString : shoppingListAsList
+             ) {
+            ShoppingItem newShoppingItem = new ShoppingItem();
+            newShoppingItem.setName(shoppingItemAsString);
+            aShoppingItemDAO.save(newShoppingItem);
+        }
+
+        if (shoppingListAsList == null) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.created(null).build();
     }
 }
