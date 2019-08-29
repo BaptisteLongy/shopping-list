@@ -61,21 +61,21 @@ public class ShoppingItemControler {
         return updatedShoppingItem;
     }
 
-    @CrossOrigin
-    @PostMapping(value="/ShoppingList")
-    public ResponseEntity<Void> addShoppingList(@RequestBody String shoppingList) {
-        String[] shoppingListAsList = shoppingList.split("\n");
-        for (String shoppingItemAsString : shoppingListAsList
-             ) {
-            ShoppingItem newShoppingItem = new ShoppingItem();
-            newShoppingItem.setName(shoppingItemAsString);
-            aShoppingItemDAO.save(newShoppingItem);
-        }
-
-        if (shoppingListAsList == null) {
-            return ResponseEntity.noContent().build();
-        }
-
-        return ResponseEntity.created(null).build();
-    }
+//    @CrossOrigin
+//    @PostMapping(value="/ShoppingList")
+//    public ResponseEntity<Void> addShoppingList(@RequestBody String shoppingList) {
+//        String[] shoppingListAsList = shoppingList.split("\n");
+//        for (String shoppingItemAsString : shoppingListAsList
+//             ) {
+//            ShoppingItem newShoppingItem = new ShoppingItem();
+//            newShoppingItem.setName(shoppingItemAsString);
+//            aShoppingItemDAO.save(newShoppingItem);
+//        }
+//
+//        if (shoppingListAsList == null) {
+//            return ResponseEntity.noContent().build();
+//        }
+//
+//        return ResponseEntity.created(null).build();
+//    }
 }
