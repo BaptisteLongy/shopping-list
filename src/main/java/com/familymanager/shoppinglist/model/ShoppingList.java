@@ -10,6 +10,16 @@ public class ShoppingList {
     @GeneratedValue
     private int id;
 
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @OneToMany(cascade = {CascadeType.ALL})
     private List<ShoppingItem> ListOfItems;
 
@@ -36,6 +46,7 @@ public class ShoppingList {
     public String toString() {
         return "ShoppingList{" +
                 "id=" + id +
+                "name=" + name +
                 ", list of items='" + ListOfItems.toString() + '\'' +
                 '}';
     }
