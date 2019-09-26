@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 public class ShoppingListControler {
@@ -22,7 +23,7 @@ public class ShoppingListControler {
     private ShoppingItemDAO aShoppingItemDAO;
 
     @CrossOrigin
-    @GetMapping(value="/ShoppingList/{id}")
+    @GetMapping(value="/ShoppingLists/{id}")
     public ShoppingList getShoppingListById(@PathVariable int id) {
         ShoppingList foundShoppingList = aShoppingListDAO.findById(id);
 
@@ -34,7 +35,15 @@ public class ShoppingListControler {
     }
 
     @CrossOrigin
-    @PostMapping(value="/ShoppingList")
+    @GetMapping(value="/ShoppingLists/")
+    public List<ShoppingList> getShoppingListById() {
+        List<ShoppingList> foundShoppingLists = aShoppingListDAO.findAll();
+
+        return foundShoppingLists;
+    }
+
+    @CrossOrigin
+    @PostMapping(value="/ShoppingLists/")
     public ResponseEntity<Void> addShoppingList(@RequestBody ShoppingList newShoppingList) {
         ShoppingList shoppingListAdded = aShoppingListDAO.save(newShoppingList);
 
@@ -47,7 +56,7 @@ public class ShoppingListControler {
     }
 
     @CrossOrigin
-    @PutMapping(value="/ShoppingList/{id}/AddItem")
+    @PutMapping(value="/ShoppingLists/{id}/AddItem")
     public ShoppingList addShoppingItemToShoppingList(@PathVariable int id, @RequestBody ShoppingItem newShoppingItem) {
         ShoppingList foundShoppingList = getShoppingListById(id);
         boolean success = foundShoppingList.getListOfItems().add(newShoppingItem);
@@ -57,7 +66,7 @@ public class ShoppingListControler {
     }
 
     @CrossOrigin
-    @PutMapping(value="/ShoppingList/{id_list}/DeleteItem/{id_item}")
+    @PutMapping(value="/ShoppingLists/{id_list}/DeleteItem/{id_item}")
     public ShoppingList addShoppingItemToShoppingList(@PathVariable int id_list, @PathVariable int id_item) {
         ShoppingList foundShoppingList = getShoppingListById(id_list);
         int item_position = foundShoppingList.getListOfItems().indexOf(aShoppingItemDAO.findById(id_item));
