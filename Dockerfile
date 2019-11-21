@@ -2,7 +2,7 @@
 FROM arm32v7/openjdk
 
 # Database persitency mount point
-RUN mkdir /db
+RUN mkdir -p /db
 VOLUME /db
 
 # Make port 8080 available to the world outside this container
