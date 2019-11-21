@@ -1,6 +1,10 @@
 # Start with a base image containing Java runtime
 FROM arm32v7/openjdk
 
+# Database persitency mount point
+RUN mkdir /db
+VOLUME /db
+
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 
